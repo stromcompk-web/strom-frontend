@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { Star, Quote, MessageCircle } from "lucide-react";
 import { useReviews } from "@/contexts/ReviewContext";
-import { getProductById } from "@/data/products";
+import { useProducts } from "@/contexts/ProductContext";
 
 const ReviewsShowcase = () => {
   const { getAllReviews } = useReviews();
+  const { getProductById } = useProducts();
   const reviews = getAllReviews().slice(0, 6);
 
   return (
