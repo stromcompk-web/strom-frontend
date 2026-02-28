@@ -37,7 +37,8 @@ Thumbs.db
 
 # Local DB / data (optional: remove if you want to track DB)
 *.db
-data/
+# Only ignore root-level data/; src/data/ is source code (e.g. products.ts)
+/data/
 
 # Misc
 *.local
