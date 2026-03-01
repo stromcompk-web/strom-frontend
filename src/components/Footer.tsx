@@ -3,21 +3,21 @@ import { Link } from "react-router-dom";
 
 const footerLinks = {
   Support: [
-    { label: "Track Your Order", href: "#" },
+    { label: "Track Your Order", href: "/track-order" },
     { label: "Size Guide", href: "/size-guide" },
-    { label: "Shipment & Delivery", href: "#" },
-    { label: "Exchange Policy", href: "#" },
-    { label: "How to Order", href: "#" },
-    { label: "Terms & Conditions", href: "#" },
+    { label: "Shipment & Delivery", href: "/shipment-delivery" },
+    { label: "Exchange Policy", href: "/exchange-policy" },
+    { label: "How to Order", href: "/how-to-order" },
+    { label: "Terms & Conditions", href: "/terms" },
   ],
   Company: [
     { label: "About Us", href: "/about" },
     { label: "Store Locator", href: "/stores" },
     { label: "Admin Panel", href: "/admin" },
-    { label: "Privacy Policy", href: "#" },
-    { label: "Work With Us", href: "#" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Work With Us", href: "/work-with-us" },
     { label: "Contact Us", href: "/contact" },
-    { label: "Blog News", href: "#" },
+    { label: "Blog News", href: "/blog" },
   ],
 };
 

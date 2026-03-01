@@ -19,9 +19,17 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import AboutPage from "./pages/AboutPage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsConditionsPage from "./pages/TermsConditionsPage";
+import WorkWithUsPage from "./pages/WorkWithUsPage";
+import BlogNewsPage from "./pages/BlogNewsPage";
 import ContactPage from "./pages/ContactPage";
 import StoreLocatorPage from "./pages/StoreLocatorPage";
 import SizeGuidePage from "./pages/SizeGuidePage";
+import TrackOrderPage from "./pages/TrackOrderPage";
+import ShipmentDeliveryPage from "./pages/ShipmentDeliveryPage";
+import ExchangePolicyPage from "./pages/ExchangePolicyPage";
+import HowToOrderPage from "./pages/HowToOrderPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders";
@@ -42,9 +50,17 @@ const routeTitles: Record<string, string> = {
   "/cart": `Cart – ${SITE_NAME}`,
   "/checkout": `Checkout – ${SITE_NAME}`,
   "/about": `About Us – ${SITE_NAME}`,
+  "/privacy": `Privacy Policy – ${SITE_NAME}`,
+  "/terms": `Terms & Conditions – ${SITE_NAME}`,
+  "/work-with-us": `Work With Us – ${SITE_NAME}`,
+  "/blog": `Blog & News – ${SITE_NAME}`,
   "/contact": `Contact – ${SITE_NAME}`,
   "/stores": `Store Locator – ${SITE_NAME}`,
   "/size-guide": `Size Guide – ${SITE_NAME}`,
+  "/track-order": `Track Your Order – ${SITE_NAME}`,
+  "/shipment-delivery": `Shipment & Delivery – ${SITE_NAME}`,
+  "/exchange-policy": `Exchange Policy – ${SITE_NAME}`,
+  "/how-to-order": `How to Order – ${SITE_NAME}`,
   "/admin/login": `Admin Login – ${SITE_NAME}`,
   "/admin": `Admin – ${SITE_NAME}`,
 };
@@ -73,9 +89,17 @@ const AppContent = () => {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/privacy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms" element={<TermsConditionsPage />} />
+            <Route path="/work-with-us" element={<WorkWithUsPage />} />
+            <Route path="/blog" element={<BlogNewsPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/stores" element={<StoreLocatorPage />} />
             <Route path="/size-guide" element={<SizeGuidePage />} />
+            <Route path="/track-order" element={<TrackOrderPage />} />
+            <Route path="/shipment-delivery" element={<ShipmentDeliveryPage />} />
+            <Route path="/exchange-policy" element={<ExchangePolicyPage />} />
+            <Route path="/how-to-order" element={<HowToOrderPage />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route
               path="/admin"
