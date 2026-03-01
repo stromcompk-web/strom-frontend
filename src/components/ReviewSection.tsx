@@ -33,7 +33,7 @@ const ReviewSection = ({ productId }: ReviewSectionProps) => {
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!author.trim()) {
       toast.error("Please enter your name");
@@ -48,12 +48,17 @@ const ReviewSection = ({ productId }: ReviewSectionProps) => {
       return;
     }
     setSubmitting(true);
-    addReview({ productId, author: author.trim(), rating, comment: comment.trim() });
-    setAuthor("");
-    setRating(0);
-    setComment("");
-    setSubmitting(false);
-    toast.success("Thank you for your review!");
+    try {
+      await addReview({ productId, author: author.trim(), rating, comment: comment.trim() });
+      setAuthor("");
+      setRating(0);
+      setComment("");
+      toast.success("Thank you for your review!");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to submit review");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const avgRating =

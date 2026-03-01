@@ -1,8 +1,8 @@
 {
-  "name": "dazzle-draft-den",
+  "name": "strom-frontend",
   "private": true,
   "version": "1.0.0",
-  "description": "Dazzle Draft Den – browse and shop with style",
+  "description": "Strom – Fashion & clothing for men, women and kids. Online shopping in Pakistan.",
   "type": "module",
   "scripts": {
     "dev": "vite",

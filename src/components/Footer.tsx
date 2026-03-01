@@ -75,11 +75,11 @@ const Footer = () => (
           <ul className="space-y-3 text-sm">
             <li className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-primary" />
-              042-111-364-463
+              +923034274270
             </li>
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-primary" />
-              online@strom.com.pk
+              strom.com.pk@gmail.com
             </li>
             <li className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-primary" />

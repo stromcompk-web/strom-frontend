@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ChevronRight, Minus, Plus, ShoppingBag } from "lucide-react";
 import Header from "@/components/Header";
@@ -19,6 +19,10 @@ const ProductDetailPage = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    if (product) document.title = `${product.name} – Strom`;
+  }, [product]);
 
   if (!product) {
     return (

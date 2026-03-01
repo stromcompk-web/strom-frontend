@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ReviewProvider } from "@/contexts/ReviewContext";
@@ -34,9 +35,33 @@ import AdminLogin from "./pages/admin/AdminLogin";
 
 const queryClient = new QueryClient();
 
+const SITE_NAME = "Strom";
+const routeTitles: Record<string, string> = {
+  "/": `${SITE_NAME} | Fashion & Clothing – Men, Women & Kids`,
+  "/shop": `Shop – ${SITE_NAME}`,
+  "/cart": `Cart – ${SITE_NAME}`,
+  "/checkout": `Checkout – ${SITE_NAME}`,
+  "/about": `About Us – ${SITE_NAME}`,
+  "/contact": `Contact – ${SITE_NAME}`,
+  "/stores": `Store Locator – ${SITE_NAME}`,
+  "/size-guide": `Size Guide – ${SITE_NAME}`,
+  "/admin/login": `Admin Login – ${SITE_NAME}`,
+  "/admin": `Admin – ${SITE_NAME}`,
+};
+const getPageTitle = (pathname: string): string => {
+  if (routeTitles[pathname]) return routeTitles[pathname];
+  if (pathname.startsWith("/shop/")) return `Shop – ${SITE_NAME}`;
+  if (pathname.startsWith("/product/")) return `Product – ${SITE_NAME}`;
+  if (pathname.startsWith("/admin/")) return `Admin – ${SITE_NAME}`;
+  return `${SITE_NAME} | Fashion & Clothing`;
+};
+
 const AppContent = () => {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
+  useEffect(() => {
+    document.title = getPageTitle(location.pathname);
+  }, [location.pathname]);
   return (
     <>
       {!isAdmin && <CartDrawer />}

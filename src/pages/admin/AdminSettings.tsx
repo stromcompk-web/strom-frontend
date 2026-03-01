@@ -11,7 +11,7 @@ import { syncApi, getApiBase } from "@/lib/api";
 
 const AdminSettings = () => {
   const [storeName, setStoreName] = useState("strom");
-  const [supportEmail, setSupportEmail] = useState("online@strom.com.pk");
+  const [supportEmail, setSupportEmail] = useState("strom.com.pk@gmail.com");
   const [freeShippingThreshold, setFreeShippingThreshold] = useState("5000");
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [lowStockAlerts, setLowStockAlerts] = useState(true);

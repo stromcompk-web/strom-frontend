@@ -42,8 +42,8 @@ const ContactPage = () => {
 
               <div className="space-y-6">
                 {[
-                  { icon: Phone, label: "Phone", value: "042-111-364-463" },
-                  { icon: Mail, label: "Email", value: "online@engine.com.pk" },
+                  { icon: Phone, label: "Phone", value: "+923034274270" },
+                  { icon: Mail, label: "Email", value: "strom.com.pk@gmail.com" },
                   { icon: Clock, label: "Working Hours", value: "Mon–Fri 9:30 AM to 5:30 PM" },
                   { icon: MapPin, label: "Head Office", value: "Lahore, Pakistan" },
                 ].map((item) => (

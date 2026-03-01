@@ -3,12 +3,12 @@ import Footer from "@/components/Footer";
 import { MapPin, Phone, Clock } from "lucide-react";
 
 const stores = [
-  { city: "Lahore", address: "MM Alam Road, Gulberg III", phone: "042-111-364-463" },
-  { city: "Karachi", address: "Dolmen Mall, Clifton", phone: "021-111-364-463" },
-  { city: "Islamabad", address: "Centaurus Mall, F-8", phone: "051-111-364-463" },
-  { city: "Faisalabad", address: "D Ground, Susan Road", phone: "041-111-364-463" },
-  { city: "Multan", address: "Gulgasht Colony, Bosan Road", phone: "061-111-364-463" },
-  { city: "Peshawar", address: "University Road, GT Market", phone: "091-111-364-463" },
+  { city: "Lahore", address: "MM Alam Road, Gulberg III", phone: "+923034274270" },
+  { city: "Karachi", address: "Dolmen Mall, Clifton", phone: "+923034274270" },
+  { city: "Islamabad", address: "Centaurus Mall, F-8", phone: "+923034274270" },
+  { city: "Faisalabad", address: "D Ground, Susan Road", phone: "+923034274270" },
+  { city: "Multan", address: "Gulgasht Colony, Bosan Road", phone: "+923034274270" },
+  { city: "Peshawar", address: "University Road, GT Market", phone: "+923034274270" },
 ];
 
 const StoreLocatorPage = () => (

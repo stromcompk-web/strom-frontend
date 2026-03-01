@@ -76,7 +76,7 @@ const AdminReviews = () => {
       (getProductById(r.productId)?.name ?? "").toLowerCase().includes(search.toLowerCase())
   );
 
-  const handleAddSubmit = (e: React.FormEvent) => {
+  const handleAddSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!productId) {
       toast.error("Please select a product");
@@ -94,20 +94,28 @@ const AdminReviews = () => {
       toast.error("Please enter the review comment");
       return;
     }
-    addReview({ productId, author: author.trim(), rating, comment: comment.trim() });
-    toast.success("Review added successfully");
-    setAddDialogOpen(false);
-    setProductId("");
-    setAuthor("");
-    setRating(0);
-    setComment("");
+    try {
+      await addReview({ productId, author: author.trim(), rating, comment: comment.trim() });
+      toast.success("Review added successfully");
+      setAddDialogOpen(false);
+      setProductId("");
+      setAuthor("");
+      setRating(0);
+      setComment("");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to add review");
+    }
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (deleteId) {
-      deleteReview(deleteId);
-      toast.success("Review deleted");
-      setDeleteId(null);
+      try {
+        await deleteReview(deleteId);
+        toast.success("Review deleted");
+        setDeleteId(null);
+      } catch (err) {
+        toast.error(err instanceof Error ? err.message : "Failed to delete review");
+      }
     }
   };
 

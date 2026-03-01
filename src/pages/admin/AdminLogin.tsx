@@ -90,9 +90,6 @@ const AdminLogin = () => {
               )}
             </Button>
           </form>
-          <p className="text-xs text-muted-foreground text-center mt-4">
-            Demo: admin@engine.com / admin123
-          </p>
         </CardContent>
       </Card>
     </div>

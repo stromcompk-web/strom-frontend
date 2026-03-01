@@ -1,6 +1,6 @@
-# Dazzle Draft Den
+# Strom
 
-Browse and shop with style.
+Fashion & clothing for men, women and kids. Online shopping in Pakistan.
 
 ## Tech stack
 
@@ -27,7 +27,7 @@ npm run dev
 | Command        | Description              |
 |----------------|--------------------------|
 | `npm run dev`  | Start dev server         |
-| `npm run build`| Production build         |
+| `npm run build`| Production build        |
 | `npm run preview` | Preview production build |
 | `npm run lint` | Run ESLint               |
 | `npm run test` | Run tests                |

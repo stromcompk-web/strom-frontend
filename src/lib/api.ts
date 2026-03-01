@@ -137,3 +137,25 @@ export const syncApi = {
   pushToRemote: () =>
     api<{ ok: boolean; message: string }>('/sync/push', { method: 'POST' }),
 };
+
+export type Review = {
+  id: string;
+  productId: string;
+  author: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+  reviewerId: string;
+};
+
+export const reviewsApi = {
+  getAll: (productId?: string) =>
+    api<Review[]>(`/reviews${productId ? `?productId=${encodeURIComponent(productId)}` : ''}`),
+  create: (payload: { productId: string; author: string; rating: number; comment: string; reviewerId?: string }) =>
+    api<Review>('/reviews', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+  delete: (id: string) =>
+    api<{ ok: boolean }>(`/reviews/${id}`, { method: 'DELETE' }),
+};
