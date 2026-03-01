@@ -1,0 +1,14 @@
+# Render Blueprint for strom frontend (static site).
+# Use this if you deploy via Infrastructure as Code and want SPA routes in repo.
+# Root directory for this service should be set to strom-frontend (or deploy from this folder).
+services:
+  - type: web
+    name: strom-frontend
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    routes:
+      # SPA fallback: serve index.html for all paths so React Router can handle /admin, /checkout, etc.
+      - type: rewrite
+        source: /*
+        destination: /index.html

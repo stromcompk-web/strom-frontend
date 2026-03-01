@@ -16,6 +16,7 @@ import Index from "./pages/Index";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import StoreLocatorPage from "./pages/StoreLocatorPage";
@@ -30,7 +31,6 @@ import AdminReviews from "./pages/admin/AdminReviews";
 import AdminProductForm from "./pages/admin/AdminProductForm";
 import AdminOrderDetail from "./pages/admin/AdminOrderDetail";
 import AdminLogin from "./pages/admin/AdminLogin";
-import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +46,7 @@ const AppContent = () => {
             <Route path="/shop/:category" element={<ShopPage />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/stores" element={<StoreLocatorPage />} />
@@ -75,7 +76,7 @@ const AppContent = () => {
               <Route path="settings" element={<AdminSettings />} />
               <Route path="*" element={<Navigate to="/admin" replace />} />
             </Route>
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );

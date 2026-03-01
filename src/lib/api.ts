@@ -75,7 +75,17 @@ export const productsApi = {
 
 export type OrderStatus = 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
-export type OrderItem = { productId: string; productName: string; quantity: number; price: number };
+export type OrderItem = { productId: string; productName: string; quantity: number; price: number; size?: string; color?: string };
+
+export type CreateOrderItem = { productId: string; productName: string; quantity: number; price: number; size: string; color: string };
+
+export type CreateOrderPayload = {
+  customerName: string;
+  email: string;
+  phone: string;
+  city: string;
+  items: CreateOrderItem[];
+};
 
 export type Order = {
   id: string;
@@ -93,6 +103,11 @@ export const ordersApi = {
   getAll: (status?: OrderStatus) =>
     api<Order[]>(`/orders${status ? `?status=${status}` : ''}`),
   getById: (id: string) => api<Order>(`/orders/${id}`),
+  create: (payload: CreateOrderPayload) =>
+    api<Order>('/orders', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
   updateStatus: (id: string, status: OrderStatus) =>
     api<Order>(`/orders/${id}/status`, {
       method: 'PATCH',

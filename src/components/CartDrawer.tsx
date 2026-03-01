@@ -129,9 +129,13 @@ const CartDrawer = () => {
             >
               View Cart
             </Link>
-            <button className="w-full py-3 bg-primary text-primary-foreground font-display uppercase text-sm tracking-wider hover:bg-brand-dark transition-colors">
+            <Link
+              to="/checkout"
+              onClick={closeCart}
+              className="block w-full text-center py-3 bg-primary text-primary-foreground font-display uppercase text-sm tracking-wider hover:bg-brand-dark transition-colors"
+            >
               Checkout
-            </button>
+            </Link>
           </div>
         )}
       </div>

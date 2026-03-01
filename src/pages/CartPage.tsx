@@ -162,9 +162,12 @@ const CartPage = () => {
                       Add {formatPrice(5000 - totalPrice)} more for free delivery!
                     </p>
                   )}
-                  <button className="w-full mt-6 py-4 bg-primary text-primary-foreground font-display uppercase text-sm tracking-widest hover:bg-brand-dark transition-colors">
+                  <Link
+                    to="/checkout"
+                    className="w-full mt-6 py-4 bg-primary text-primary-foreground font-display uppercase text-sm tracking-widest hover:bg-brand-dark transition-colors inline-block text-center"
+                  >
                     Proceed to Checkout
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
