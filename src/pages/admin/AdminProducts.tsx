@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, Search, MoreHorizontal, Pencil, Trash2, Eye } from "lucide-react";
+import { Plus, Search, MoreHorizontal, Pencil, Trash2, Eye, RefreshCw } from "lucide-react";
 import { useProducts } from "@/contexts/ProductContext";
 import { formatPrice } from "@/data/products";
 import type { Product } from "@/data/products";
@@ -34,8 +34,12 @@ const AdminProducts = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  const { products, deleteProduct: removeProduct } = useProducts();
+  const { products, deleteProduct: removeProduct, isLoading, fetchError, refetch } = useProducts();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const filtered = products.filter(
     (p) =>
@@ -81,14 +85,30 @@ const AdminProducts = () => {
             Products
           </h1>
           <p className="text-muted-foreground font-body text-sm mt-1">
-            Manage your product catalog
+            Manage your product catalog. Data is loaded from the server — same on every device.
           </p>
         </div>
-        <Button className="w-fit" onClick={() => navigate("/admin/products/new")}>
-          <Plus className="h-4 w-4 mr-2" />
-          Add Product
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isLoading}>
+            <RefreshCw className={`w-4 h-4 mr-1 ${isLoading ? "animate-spin" : ""}`} />
+            Refresh
+          </Button>
+          <Button className="w-fit" onClick={() => navigate("/admin/products/new")}>
+            <Plus className="h-4 w-4 mr-2" />
+            Add Product
+          </Button>
+        </div>
       </div>
+
+      {fetchError && (
+        <div className="rounded-md border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive flex items-center justify-between gap-4">
+          <span>{fetchError}</span>
+          <Button variant="outline" size="sm" onClick={() => refetch()}>
+            <RefreshCw className="w-4 h-4 mr-1" />
+            Retry
+          </Button>
+        </div>
+      )}
 
       <Card>
         <CardHeader>

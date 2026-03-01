@@ -1,11 +1,13 @@
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 import { ordersApi, type Order, type OrderStatus } from "@/lib/api";
 
+/** Orders are always loaded from backend DB – no localStorage. Same data on every device when admin is logged in. */
 type OrderContextType = {
   orders: Order[];
   updateOrderStatus: (orderId: string, status: OrderStatus) => Promise<void>;
   getOrderById: (id: string) => Order | undefined;
   isLoading: boolean;
+  fetchError: string | null;
   refetch: () => Promise<void>;
 };
 
@@ -20,13 +22,17 @@ export const useOrders = () => {
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const fetchOrders = useCallback(async () => {
     try {
       setIsLoading(true);
+      setFetchError(null);
       const data = await ordersApi.getAll();
-      setOrders(data);
-    } catch {
+      setOrders(Array.isArray(data) ? data : []);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to load orders";
+      setFetchError(message);
       setOrders([]);
     } finally {
       setIsLoading(false);
@@ -39,10 +45,8 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
 
   const updateOrderStatus = useCallback(async (orderId: string, status: OrderStatus) => {
     await ordersApi.updateStatus(orderId, status);
-    setOrders((prev) =>
-      prev.map((o) => (o.id === orderId ? { ...o, status } : o))
-    );
-  }, []);
+    await fetchOrders();
+  }, [fetchOrders]);
 
   const getOrderById = useCallback(
     (id: string) => orders.find((o) => o.id === id),
@@ -50,7 +54,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   );
 
   return (
-    <OrderContext.Provider value={{ orders, updateOrderStatus, getOrderById, isLoading, refetch: fetchOrders }}>
+    <OrderContext.Provider value={{ orders, updateOrderStatus, getOrderById, isLoading, fetchError, refetch: fetchOrders }}>
       {children}
     </OrderContext.Provider>
   );

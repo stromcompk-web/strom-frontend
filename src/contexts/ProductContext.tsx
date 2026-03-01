@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useCallback, useEffect, type React
 import type { Product } from "@/data/products";
 import { productsApi } from "@/lib/api";
 
+/** Products are always loaded from backend DB – no localStorage. Same data on every device. */
 type ProductContextType = {
   products: Product[];
   addProduct: (product: Product) => Promise<void>;
@@ -9,6 +10,7 @@ type ProductContextType = {
   deleteProduct: (id: string) => Promise<void>;
   getProductById: (id: string) => Product | undefined;
   isLoading: boolean;
+  fetchError: string | null;
   refetch: () => Promise<void>;
 };
 
@@ -23,13 +25,17 @@ export const useProducts = () => {
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
 
   const fetchProducts = useCallback(async () => {
     try {
       setIsLoading(true);
+      setFetchError(null);
       const data = await productsApi.getAll();
-      setProducts(data);
-    } catch {
+      setProducts(Array.isArray(data) ? data : []);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to load products";
+      setFetchError(message);
       setProducts([]);
     } finally {
       setIsLoading(false);
@@ -41,23 +47,19 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   }, [fetchProducts]);
 
   const addProduct = useCallback(async (product: Product) => {
-    const created = await productsApi.create(product);
-    setProducts((prev) => [...prev, created]);
-    // Refetch so list is from DB and Network tab shows GET /products
+    await productsApi.create(product);
     await fetchProducts();
   }, [fetchProducts]);
 
   const updateProduct = useCallback(async (id: string, product: Product) => {
     await productsApi.update(id, product);
-    setProducts((prev) =>
-      prev.map((p) => (p.id === id ? product : p))
-    );
-  }, []);
+    await fetchProducts();
+  }, [fetchProducts]);
 
   const deleteProduct = useCallback(async (id: string) => {
     await productsApi.delete(id);
-    setProducts((prev) => prev.filter((p) => p.id !== id));
-  }, []);
+    await fetchProducts();
+  }, [fetchProducts]);
 
   const getProductById = useCallback(
     (id: string) => products.find((p) => p.id === id),
@@ -73,6 +75,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         deleteProduct,
         getProductById,
         isLoading,
+        fetchError,
         refetch: fetchProducts,
       }}
     >

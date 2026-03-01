@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, MoreHorizontal, Eye, Package } from "lucide-react";
+import { Search, MoreHorizontal, Eye, Package, RefreshCw } from "lucide-react";
 import { useOrders } from "@/contexts/OrderContext";
 import { formatPrice } from "@/data/products";
 import type { Order, OrderStatus } from "@/lib/api";
@@ -47,8 +47,12 @@ const AdminOrders = () => {
   const [updateStatusOrder, setUpdateStatusOrder] = useState<Order | null>(null);
   const [updateStatusOpen, setUpdateStatusOpen] = useState(false);
 
-  const { orders, updateOrderStatus } = useOrders();
+  const { orders, updateOrderStatus, isLoading, fetchError, refetch } = useOrders();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const filtered = orders.filter((order) => {
     const matchSearch =
@@ -90,11 +94,22 @@ const AdminOrders = () => {
           Orders
         </h1>
         <p className="text-muted-foreground font-body text-sm mt-1">
-          Manage and track all customer orders
+          Manage and track all customer orders. Data is loaded from the server — same on every device.
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      {fetchError && (
+        <div className="rounded-md border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive flex items-center justify-between gap-4">
+          <span>{fetchError}</span>
+          <Button variant="outline" size="sm" onClick={() => refetch()} className="shrink-0">
+            <RefreshCw className="w-4 h-4 mr-1" />
+            Retry
+          </Button>
+        </div>
+      )}
+
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="grid gap-4 md:grid-cols-3 flex-1">
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Total Orders</CardDescription>
@@ -123,6 +138,17 @@ const AdminOrders = () => {
             </div>
           </CardContent>
         </Card>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => refetch()}
+          disabled={isLoading}
+          className="shrink-0 self-end"
+        >
+          <RefreshCw className={`w-4 h-4 mr-1 ${isLoading ? "animate-spin" : ""}`} />
+          Refresh
+        </Button>
       </div>
 
       <Card>
