@@ -32,7 +32,11 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
       setOrders(Array.isArray(data) ? data : []);
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to load orders";
-      setFetchError(message);
+      if (message.toLowerCase().includes('unauthorized') || message.includes('401')) {
+        setFetchError('Please log in again. Session may have expired.');
+      } else {
+        setFetchError(message);
+      }
       setOrders([]);
     } finally {
       setIsLoading(false);

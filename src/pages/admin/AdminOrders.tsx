@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Search, MoreHorizontal, Eye, Package, RefreshCw } from "lucide-react";
 import { useOrders } from "@/contexts/OrderContext";
 import { formatPrice } from "@/data/products";
@@ -99,12 +99,17 @@ const AdminOrders = () => {
       </div>
 
       {fetchError && (
-        <div className="rounded-md border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive flex items-center justify-between gap-4">
+        <div className="rounded-md border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive flex items-center justify-between gap-4 flex-wrap">
           <span>{fetchError}</span>
-          <Button variant="outline" size="sm" onClick={() => refetch()} className="shrink-0">
-            <RefreshCw className="w-4 h-4 mr-1" />
-            Retry
-          </Button>
+          <div className="flex items-center gap-2">
+            {fetchError.includes('log in again') && (
+              <Link to="/admin/login" className="underline font-medium shrink-0">Log in</Link>
+            )}
+            <Button variant="outline" size="sm" onClick={() => refetch()} className="shrink-0">
+              <RefreshCw className="w-4 h-4 mr-1" />
+              Retry
+            </Button>
+          </div>
         </div>
       )}
 

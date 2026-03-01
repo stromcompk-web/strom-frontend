@@ -1,7 +1,15 @@
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
+const TOKEN_KEY = 'engine_admin_token';
+
 function getToken(): string | null {
-  return localStorage.getItem('engine_admin_token');
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+/** Call when 401 — clears token so user is sent to login. */
+function clearAuth() {
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem('engine_admin_auth');
 }
 
 export async function api<T>(
@@ -19,6 +27,10 @@ export async function api<T>(
   }
   const res = await fetch(url, { ...options, headers });
   if (!res.ok) {
+    if (res.status === 401) {
+      clearAuth();
+      if (typeof window !== 'undefined') window.dispatchEvent(new Event('auth:logout'));
+    }
     const err = await res.json().catch(() => ({ message: res.statusText }));
     const msg = err.message || `HTTP ${res.status}`;
     if (import.meta.env.DEV) {

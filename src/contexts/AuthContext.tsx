@@ -46,6 +46,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     validateToken();
   }, [validateToken]);
 
+  useEffect(() => {
+    const onLogout = () => {
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      setIsAuthenticated(false);
+    };
+    window.addEventListener('auth:logout', onLogout);
+    return () => window.removeEventListener('auth:logout', onLogout);
+  }, []);
+
   const login = useCallback(async (email: string, password: string) => {
     try {
       const { authApi } = await import("@/lib/api");
